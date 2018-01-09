@@ -1,3 +1,10 @@
+This is a series of exercises done for the odin project, cloned from their repository found at https://github.com/TheOdinProject/javascript-exercises
+
+My solutions are contained within. 
+
+
+Below is the original text of the readme file:
+
 These are a series of javascript exercises intended to be used alongside the curriculum at 'The Odin Project'  They start very simply, but get more involved as you progress through them.
 
 There will eventually be a suggested order of completion, but at this time since we are still in the process of creating more exercises the order is subject to change and has not yet been specified... In general however there are a couple which make a good "starting point" feel free to at least start with these:
