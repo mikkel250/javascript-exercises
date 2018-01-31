@@ -1,0 +1,10 @@
+str = str.replace(/[^\w\s]|_/g, "")
+         .replace(/\s+/g, " ");
+Removes everything except alphanumeric characters and whitespace, then collapses multiple adjacent characters to single spaces.
+
+Detailed explanation:
+
+\w is any digit, letter, or underscore.
+\s is any whitespace.
+[^\w\s] is anything that's not a digit, letter, whitespace, or underscore.
+[^\w\s]|_ is the same as #3 except with the underscores added back in.
