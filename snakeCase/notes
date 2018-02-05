@@ -8,3 +8,26 @@ Detailed explanation:
 \s is any whitespace.
 [^\w\s] is anything that's not a digit, letter, whitespace, or underscore.
 [^\w\s]|_ is the same as #3 except with the underscores added back in.
+
+------------------------
+
+Another example
+
+I ran across the same issue, this solution did the trick and was very readable:
+
+var sentence = "This., -/ is #! an $ % ^ & * example ;: {} of a = -_ string with `~)() punctuation";
+var newSen = sentence.match(/[^_\W]+/g).join(' ');
+console.log(newSen);
+Result:
+
+"This is an example of a string with punctuation"
+The trick was to create a negated set. This means that it matches anything that is not within the set i.e. [^abc] - not a, b or c
+
+\W is any non-word, so [^\W]+ will negate anything that is not a word char.
+
+By adding in the _ (underscore) you can negate that as well.
+
+Make it apply globally /g, then you can run any string through it and clear out the punctuation:
+
+/[^_\W]+/g
+Nice and clean ;)
