@@ -68,19 +68,19 @@ function titleCreator(str) {
 					for (let i = 1; i < titleArray.length; i++) {
 						var titleArrayWord = titleArray[i];
 												
-						console.log(finalTitleArray);
+						
 						// if the word is more than 3 characters long
-						if (titleArrayWord.length > 3) { // use .length to determine if a word is "small"					
+						if (titleArrayWord.length > 3 && titleArrayWord.toLowerCase() !== "over") { 					
 							// push to the final array
 							finalTitleArray.push(titleArrayWord);
-							console.log(finalTitleArray);
+							
 							// otherwise, lowercase the word and push
 						} else {
 								// convert back to lower case
 							let lowerCased = titleArrayWord.toLowerCase();
 							// push lowercased word to final array
 							finalTitleArray.push(lowerCased);
-							console.log(finalTitleArray);
+							
 							}
 						
 					}
