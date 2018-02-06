@@ -19,6 +19,12 @@ Will have to use some sort of logic to tell the program that if the index is les
 
 Things to definitely use:
 Ascii character codes  http://www.asciitable.com/
+0=48
+9=57
+A=65
+Z=90
+a=97 
+z=122
 
 http://www.seth-dehaan.com/2016/01/21/freecodecamp-caesar-s-cipher/
 
