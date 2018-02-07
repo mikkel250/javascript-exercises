@@ -143,3 +143,69 @@ So what's going on there is:
 String.fromCharCode returns the entered digits as a string. 
 E.g. String.fromCharCode(65, 66, 67);  // returns "ABC"
 So you're saying, return the string from the modified number:
+
+
+
+
+
+An explanation of looping around:
+https://stackoverflow.com/questions/20246049/how-would-i-loop-around-the-alphabet
+	
+The key is modulus division:
+
+char c;
+c = (char)((c - 'a' + 5) % 26 + 'a');
+c - 'a' gives you the number of the letter 0-25, which is then shifted up by 5 and the remainder after dividing by 26 is then added to 'a' to give up back the character for the letter.
+
+So....
+in the Odin answer what's happening is that you are entering the code for the letter, adding the shift, then subtracting down to the letter 'a'
+Then you're taking that and getting the remainder after dividing by 26 and adding the number that would correspond to 'a' back to it
+e.g. shift by 3, assume there's a 'z' in the string
+code for z is 122
+so you go 122 + 3 - 97 = 28
+Then you run mod on that number to get the new code. You use 26 as the second variable because that's the number of letters in alphabet
+(28, 26)
+28 % 26 + 26 = 28 % 26 = 2
+Which means you would count 2 up FROM letter 'a' (this may have been part what was confusing me)
+then add 97 back to it to get the code for the final letter
+2 + 97 = 99
+99 = 'c'
+
+Further clarification, say the letter is 'z' and add 1 to get letter 'a', you would want to end up with 0 at the end of the math
+122 + 1 - 97 = 26
+then 26 % 26 + 26 = 26 % 26 = 0;
+then add 97 to it to start counting from the bottom of the alphabet again
+0 + 97 = 97
+97 = 'a'
+
+So then the map function iterates through the whole array, creates a new one after running shiftChar on each element.
+the shiftChar function will return the character given it 
+
+
+
+Just to clarify more, I'm going to write it out as it would be run by the computer:
+function(string, shift) {
+  return string
+    .split("")
+    .map(char => shiftChar(char, shift))
+    .join("");
+};
+
+function("xyz", 3) {
+  return "xyz"
+    .split("");
+    		---> [x, y, z]
+    .map(function("x") {
+    	shiftChar(x, 3)
+    		const code = "x".charCodeAt(); = 120
+    			---> meets if loop criteria, so
+    			return the corresponding number ( String.fromCharCode() )  for this
+    			mod(120 + 3 - 97, 26) + 97 
+
+    			= (0) + 97 
+
+
+    } 
+    		--->
+    .join("");
+};

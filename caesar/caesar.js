@@ -1,5 +1,8 @@
-var caesar = function() {
-
+var caesar = function(string, shift) {
+	var letters = string.split("");
+	letters.map(charCodeAt)
+		if (letters[i].)
+	}
 }
 
 module.exports = caesar
@@ -18,6 +21,7 @@ Will have to use some sort of logic to tell the program that if the index is les
 
 
 Things to definitely use:
+charCodeAt()
 Ascii character codes  http://www.asciitable.com/
 0=48
 9=57
@@ -38,3 +42,5 @@ Map function?
 Sort the array?
 
 
+An explanation of looping around:
+https://stackoverflow.com/questions/20246049/how-would-i-loop-around-the-alphabet
