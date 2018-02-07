@@ -196,10 +196,10 @@ function("xyz", 3) {
     .split("");
     		---> [x, y, z]
     .map(function("x") {
-    	shiftChar(x, 3)
+    	shiftChar("x", 3)
     		const code = "x".charCodeAt(); = 120
     			---> meets if loop criteria, so
-    			return the corresponding number ( String.fromCharCode() )  for this
+    			return the corresponding number ( String.fromCharCode() ) for this
     			mod(120 + 3 - 97, 26) + 97 
 
     			= (0) + 97 

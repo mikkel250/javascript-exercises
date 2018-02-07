@@ -5,6 +5,28 @@ var caesar = function(string, shift) {
 	}
 }
 
+// Check the case of the letter
+function upperOrLowerCase (char) {
+	if (char.charCodeAt() < 97) {
+		return 65;
+	} else {
+		return 97;
+	}
+}
+
+// Get the character code
+function getCharCode (char) {
+
+}
+
+// Shift the character 
+function shiftCharacter (char, shift) {
+	let code = getCharCode(char);
+	let case = upperOrLowerCase(char);
+	return (code + shift % 26) + case;
+}
+
+
 module.exports = caesar
 
 
@@ -42,5 +64,3 @@ Map function?
 Sort the array?
 
 
-An explanation of looping around:
-https://stackoverflow.com/questions/20246049/how-would-i-loop-around-the-alphabet
