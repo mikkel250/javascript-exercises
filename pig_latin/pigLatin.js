@@ -3,39 +3,74 @@ const twoCharConsonantClusters = ["bl", "br", "ch", "cl", "cr", "dr", "fl", "fr"
 const threeCharConsonantClusters = ["sch", "scr", "shr", "spl", "spr", "squ", "str", "thr"];
 
 function translate(userInput) {
-	var firstTwo = userInput.slice(0, 3);
-	var firstThree = userInput.slice(0, 4);
+	
 	if(typeof userInput !== 'string') {return "Invalid Input. Please input a string."}
+	if (checkMultiWord(userInput) = true) {
+		var splitInput = userInput.split(" ");
+		var finalString = [];
+		for (let s = 0; s < splitInput.length; s++) {
+			let thisWord = splitInput[s];
+			checkThree(thisWord);
+			checkTwo(thisWord);
+			checkVowel(thisWord);
+			consonant(thisWord);
+		}		
+	} else if (userInput ) {
+		 
+	} else {
+		return userInput.slice(1) + userInput[0] + "ay";
+			}
+} // end of translate()
 
-	// run 2 checks (one for vowels, then one for consonant clusters)
-	// then 2 loops depending on match: one for the vowels against the string, one for consonant clusters against the string?
-	// maybe use array.match()  ?
-	
+function runChecks(input) {
+	checkVowel(input);
+	checkThree(input);
+	checkTwo(input);
+}
 
-	
 
-		for (let i = 0; i < vowels.length; i++) {
+function checkVowel(userInput) {
+	for (let i = 0; i < vowels.length; i++) {
 			let thisLetter = vowels[i];
 			if (userInput[0] == thisLetter) {
 			return userInput + "ay";
 			}
-		}
-		
+	}
+}
+
+
+function checkTwo(userInput) {
+		var firstTwo = userInput.slice(0, 2);
 		for (let j = 0; j < twoCharConsonantClusters.length; j++) {
 			let theseTwo = twoCharConsonantClusters[j];
 			if (firstTwo == theseTwo) {
-				return userInput.slice(2) + firstTwo + "ay";
+				let checkTwoResult = userInput.slice(2) + firstTwo + "ay";
+				finalString.push(checkTwoResult);
 			}
 		}
-		
+	}
+
+	function checkThree(userInput)	 {
+		var firstThree = userInput.slice(0, 3);
 		for (let k = 0; k < threeCharConsonantClusters.length; k++) {
 			let theseThree = threeCharConsonantClusters[k];
 			if (firstThree == theseThree) {
-				return userInput.slice(3) + firstThree + "ay";
+				let checkThreeResult = userInput.slice(3) + firstThree + "ay";
+				finalString.push(checkThreeResult);
 			}
 		}
+	}
+
+
+function consonant(userInput) {
+	let changed = userInput.slice(1) + userInput[0] + "ay";
+	finalString.push(changed);
 }
 
+
+function checkMultiWord(userInput) {
+	userInput.indexOf(" ") !== -1; //check for spaces. returns true if they are present.
+}
 
 module.exports = {
 	translate
