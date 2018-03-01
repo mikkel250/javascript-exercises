@@ -23,9 +23,10 @@ function translate(userInput) {
 } // end of translate()
 
 function runChecks(input) {
-	checkVowel(input);
 	checkThree(input);
 	checkTwo(input);
+	checkVowel(input);
+	consonant(input);
 }
 
 
