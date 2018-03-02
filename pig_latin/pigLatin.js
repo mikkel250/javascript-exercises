@@ -1,57 +1,60 @@
-const vowels = "aeiouAEIOU"
-const twoCharConsonantClusters = ["bl", "br", "ch", "cl", "cr", "dr", "fl", "fr", "gh", "gl", "gr", "ng", "ph", "pl", "pr", "qu", "sc", "sh", "sk", "sl", "sm", "sn", "sp", 'st', "sw", "th", 'tr', 'tw', "wh", "wr"]
+const vowels = "aeiouAEIOU";
+const twoCharConsonantClusters = ["bl", "br", "ch", "cl", "cr", "dr", "fl", "fr", "gh", "gl", "gr", "ng", "ph", "pl", "pr", "qu", "sc", "sh", "sk", "sl", "sm", "sn", "sp", 'st', "sw", "th", 'tr', 'tw', "wh", "wr"];
 const threeCharConsonantClusters = ["sch", "scr", "shr", "spl", "spr", "squ", "str", "thr"];
 // set flags to check against - for single words
 var vowelCheck = false;
 var multiWord = false;
 var twoChar = false;
 var threeChar = false;
+var finalString = [];
 
-function translate(userInput) {
-	
+function translate(userInput) {	
 	if(typeof userInput !== 'string') {return "Invalid Input. Please input a string."}
-	// run checks for multiple words
-	runChecks(userInput);
+
+	runChecks(userInput); // set the flags
 	if (multiWord === true) {
-		var splitInput = userInput.split(" ");
-		var finalString = [];
+		var splitInput = userInput.split(" ");		
 		for (let s = 0; s < splitInput.length; s++) {
 			let thisWord = splitInput[s];
-			checkThree(thisWord);
-			checkTwo(thisWord);
-			checkVowel(thisWord);
-			consonant(thisWord);
-			//return finalString.join(" ");
+			runChecks(thisWord);
+			flagCheckAndTransform(thisWord);			
 		}	
-	
-	// check for consonant clusters
-	} else if (multiWord === false && threeCharPresent === true) {
-			checkThree(userInput);
-	} else if (multiWord === false && twoCharPresent === true) {
-			checkTwo(userInput);
-	// check for vowel
-	} else if (multiWord === false && vowelPresent === true) {
-			checkVowel(userInput);
-	// just run consonant	 
-	} else {
-		return userInput.slice(1) + userInput[0] + "ay";
-			}
-return finalString.join(" ");		// return the result after the loop is finished
-} // end of translate()
+		let stringToReturn = finalString.join(" "); // hold the result in a variable to allow the array to be reset
+		console.log(stringToReturn);
+		//finalString.length = 0;  // reset the array for the next translation
+		console.log(finalString);
+		return stringToReturn;		// return the result after the loop is finished
+		
+	} else {		
+		flagCheckAndTransform(userInput);
+		let stringToReturn = finalString.toString();
+		console.log(stringToReturn);
+		finalString.length = 0;
+		console.log(finalString);
+		return stringToReturn;
+	}
+} // end of translate
 
 function runChecks(input) {	
-	vowelPresent(input);
 	checkMultiWord(input);
-	twoCharPresent(input);
-	threeCharPresent(input);
+	if (multiWord === false) {
+	vowelPresent(input);
+	} else if (vowelCheck === false) {
+		threeCharPresent(input);
+	} else {
+	twoCharPresent(input);	
+	}
 }
 
 function vowelPresent(userInput) {
-for (let i = 0; i < vowels.length; i++) {
+	for (let i = 0; i < vowels.length; i++) {
 			let thisLetter = vowels[i];
 			if (userInput[0] == thisLetter) {
-			vowelCheck = true;
+				vowelCheck = true;
+			}
+	}
 }
+
 
 function twoCharPresent(userInput) {
 	var firstTwo = userInput.slice(0, 2);
@@ -73,7 +76,7 @@ function threeCharPresent(userInput) {
 		}
 }
 
-function checkVowel(userInput) {
+function vowelTransform(userInput) {
 	for (let i = 0; i < vowels.length; i++) {
 			let thisLetter = vowels[i];
 			if (userInput[0] == thisLetter) {
@@ -83,38 +86,59 @@ function checkVowel(userInput) {
 }
 
 
-function checkTwo(userInput) {
+function twoCharTransform (userInput) {
 		var firstTwo = userInput.slice(0, 2);
+		console.log(firstTwo);
 		for (let j = 0; j < twoCharConsonantClusters.length; j++) {
 			let theseTwo = twoCharConsonantClusters[j];
 			if (firstTwo == theseTwo) {
-				let checkTwoResult = userInput.slice(2) + firstTwo + "ay";
-				finalString.push(checkTwoResult);
+				let twoCharTransformResult = userInput.slice(2) + firstTwo + "ay";
+				finalString.push(twoCharTransformResult);
+				console.log(finalString);
 			}
 		}
 	}
 
-	function checkThree(userInput)	 {
+	function threeCharTransform(userInput)	 {
 		var firstThree = userInput.slice(0, 3);
+		console.log(firstThree);
 		for (let k = 0; k < threeCharConsonantClusters.length; k++) {
 			let theseThree = threeCharConsonantClusters[k];
 			if (firstThree == theseThree) {
-				let checkThreeResult = userInput.slice(3) + firstThree + "ay";
-				finalString.push(checkThreeResult);
+				let threeCharTransformResult = userInput.slice(3) + firstThree + "ay";
+				finalString.push(threeCharTransformResult);
+				console.log(finalString);
 			}
 		}
 	}
 
-
 function consonant(userInput) {
 	let changed = userInput.slice(1) + userInput[0] + "ay";
+	console.log(changed)
 	finalString.push(changed);
+	console.log(finalString);
 }
 
 
 function checkMultiWord(userInput) {
 	if (userInput.indexOf(" ") !== -1) {   //check for spaces. returns true if they are present.
-	multiWord = true; 
+	multiWord = true;	
+	}
+}
+
+function flagCheckAndTransform(userInput) {
+	
+	if (multiWord === false) {
+		console.log("multiWord is False");
+		if (vowelCheck === true) {	
+			vowelTransform(userInput);
+		} else if (threeChar === true) {
+			threeCharTransform(userInput);
+		} else if (twoChar === true) {
+			twoCharTransform(userInput);	
+		} else {
+			consonant(userInput);
+		}
 	}
 }
 
@@ -122,9 +146,6 @@ module.exports = {
 	translate
 }
 
-
-
-// going to need to run checks first, right after translate, then run the if loops based on the flags. 
-// probably will be easiest and work better if I run all of the checks and use a bunch of elseif loops based on the flags rather than running 3 checks for the consonants, as that would cause the word to morph 3 times
-// maybe write a function to check the flags and run the appropriate function based on the result? Or write it into the runChecks?
-
+// need to figure out how to reset the finalString before running each transform
+// better yet, create a variable to hold the final string and then reset the array at the end of each loop
+// it almost seems like I need to create a new array for each instance....
