@@ -1,0 +1,12 @@
+// create a fibonacci array up to the variable passed ? each time? or check it and add to it if it's above the last index?
+
+// push the values to the array
+
+// if loop to check that the variable given to the function is > 2, otherwise return 1 and not < 0 otherwise return "OOPS"
+
+// create a variable/loop that pulls the -1 and -2 indexes of the array and adds them together
+
+// notes: 
+// remember that if an index or value is not found in an array, the return value the computer sends back is "-1"
+// trying to access an item that doesn't exist in the the array returns undefined
+// 
