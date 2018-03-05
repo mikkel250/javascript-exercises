@@ -9,20 +9,27 @@ var threeChar = false;
 var finalString = [];
 
 function translate(userInput) {	
-	if(typeof userInput !== 'string') {return "Invalid Input. Please input a string."}
-
 	runChecks(userInput); // set the flags
+	// if(typeof userInput !== 'string') {return "Invalid Input. Please input a string."}
+
+	
 	if (multiWord === true) {
-		var splitInput = userInput.split(" ");		
+		console.log("Multiword True");
+		var splitInput = userInput.split(" ");
+		console.log("splitInput");
 		for (let s = 0; s < splitInput.length; s++) {
 			let thisWord = splitInput[s];
+			console.log(thisWord);
 			runChecks(thisWord);
-			flagCheckAndTransform(thisWord);			
+			flagCheckAndTransform(thisWord);
+			resetFlags();
 		}	
 		let stringToReturn = finalString.join(" "); // hold the result in a variable to allow the array to be reset
 		console.log(stringToReturn);
 		//finalString.length = 0;  // reset the array for the next translation
 		console.log(finalString);
+		finalString.length = 0;
+		resetFlags();
 		return stringToReturn;		// return the result after the loop is finished
 		
 	} else {		
@@ -37,13 +44,11 @@ function translate(userInput) {
 
 function runChecks(input) {	
 	checkMultiWord(input);
-	if (multiWord === false) {
 	vowelPresent(input);
-	} else if (vowelCheck === false) {
-		threeCharPresent(input);
-	} else {
+	threeCharPresent(input);
+	// if (vowelCheck === false && threeCharPresent === false){
 	twoCharPresent(input);	
-	}
+	//}
 }
 
 function vowelPresent(userInput) {
@@ -55,27 +60,6 @@ function vowelPresent(userInput) {
 	}
 }
 
-
-function twoCharPresent(userInput) {
-	var firstTwo = userInput.slice(0, 2);
-		for (let j = 0; j < twoCharConsonantClusters.length; j++) {
-			let theseTwo = twoCharConsonantClusters[j];
-			if (firstTwo == theseTwo) {
-				twoChar = true;
-			}
-		}
-}
-
-function threeCharPresent(userInput) {
-	var firstThree = userInput.slice(0, 3);
-		for (let k = 0; k < threeCharConsonantClusters.length; k++) {
-			let theseThree = threeCharConsonantClusters[k];
-			if (firstThree == theseThree) {
-				threeChar = true;
-			}
-		}
-}
-
 function vowelTransform(userInput) {
 	for (let i = 0; i < vowels.length; i++) {
 			let thisLetter = vowels[i];
@@ -85,6 +69,16 @@ function vowelTransform(userInput) {
 	}
 }
 
+function twoCharPresent(userInput) {
+	var firstTwo = userInput.slice(0, 2);
+	console.log(firstTwo);
+		for (let j = 0; j < twoCharConsonantClusters.length; j++) {
+			let theseTwo = twoCharConsonantClusters[j];
+			if (firstTwo == theseTwo) {
+				twoChar = true;
+			}
+		}
+}
 
 function twoCharTransform (userInput) {
 		var firstTwo = userInput.slice(0, 2);
@@ -98,6 +92,16 @@ function twoCharTransform (userInput) {
 			}
 		}
 	}
+
+function threeCharPresent(userInput) {
+	var firstThree = userInput.slice(0, 3);
+		for (let k = 0; k < threeCharConsonantClusters.length; k++) {
+			let theseThree = threeCharConsonantClusters[k];
+			if (firstThree == theseThree) {
+				threeChar = true;
+			}
+		}
+}
 
 	function threeCharTransform(userInput)	 {
 		var firstThree = userInput.slice(0, 3);
@@ -126,20 +130,24 @@ function checkMultiWord(userInput) {
 	}
 }
 
-function flagCheckAndTransform(userInput) {
-	
-	if (multiWord === false) {
-		console.log("multiWord is False");
+function flagCheckAndTransform(userInput) {	
 		if (vowelCheck === true) {	
 			vowelTransform(userInput);
-		} else if (threeChar === true) {
+		} else if (vowelCheck === false && threeChar === true) {
 			threeCharTransform(userInput);
-		} else if (twoChar === true) {
+		} else if (vowelCheck === false && threeChar === false && twoChar === true) {
 			twoCharTransform(userInput);	
-		} else {
+		} else if (vowelCheck === false && threeChar === false && twoChar === false) {
 			consonant(userInput);
 		}
-	}
+	
+}
+
+function resetFlags() {
+	vowelCheck = false;
+	multiWord = false;
+  twoChar = false;
+  threeChar = false;  
 }
 
 module.exports = {
@@ -149,3 +157,12 @@ module.exports = {
 // need to figure out how to reset the finalString before running each transform
 // better yet, create a variable to hold the final string and then reset the array at the end of each loop
 // it almost seems like I need to create a new array for each instance....
+
+/* not working on the following:
+the (skipping, nothing returned)
+quick (seeing q but not seeing qu)
+brown (seeing b but not seing br)
+quiet (nothing returned)
+cherry (nothing returned)
+banana (nothing returned)
+*/ 
